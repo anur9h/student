@@ -1,12 +1,14 @@
 import os
 import sys
-from src.exception import CustomException
-from src.logger import logging
+from ..exception import CustomException
+from ..logger import logging
 import pandas as pd
+import numpy as np
 from  sklearn.model_selection import train_test_split
-from dataclasses import dataclass
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from src.exception import CustomException
+from src.components.data_transformation import DataTransformationConfig, DataTransformation
+from dataclasses import dataclass
+
 
 class DataIngestionConfig:
     train_data_path: str = os.path.join('artifacts', 'train.csv')
@@ -42,4 +44,6 @@ class DataIngestion:
         
 if __name__ == "__main__":
     obj = DataIngestion()
-    obj.initiate_data_ingestion()
+    train_data_path, test_data_path = obj.initiate_data_ingestion()
+    data_transformation = DataTransformation()
+    data_transformation.initiate_data_transformation(train_data_path, test_data_path)
