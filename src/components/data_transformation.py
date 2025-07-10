@@ -12,6 +12,9 @@ from src.exception import CustomException
 from src.logger import logging
 from src.utils import save_object
 
+from src.components.model_trainer import ModelTrainer
+from src.components.model_trainer import ModelTrainerConfig
+
 @dataclass
 class DataTransformationConfig:
     preprocessor_obj_file_path: str = os.path.join('artifacts', 'preprocessor.pkl')
