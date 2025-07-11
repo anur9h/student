@@ -43,7 +43,43 @@ class ModelTrainer:
                 "Linear Regression": LinearRegression()
             }
 
-            model_report = evaluate_model(X_train, y_train, X_test, y_test, models)
+            params={
+                "Random Forest":{
+                    'criterion':['gini','entropy'],
+                    'max_features':['sqrt','log2',None],
+                    'n_estimators': [8,16,32,64,128,256]
+                },
+                "Logistic Regression":{
+                    'penalty': ['l1', 'l2'],
+                    'C': [0.001, 0.01, 0.1, 1, 10, 100, 1000]
+                },
+                "SVM":{
+                    'C': [0.1, 1, 10, 100, 1000], 
+                    'kernel': ['linear', 'poly', 'rbf', 'sigmoid'],
+                    'gamma': [0.1, 1, 10, 100, 1000]
+                    },
+                "Decision Tree":{
+                    'criterion':['gini','entropy'],
+                    'splitter':['best','random'],
+                    'max_features':['sqrt','log2']
+                },
+                "Naive Bayes":{
+                    'var_smoothing': [0.001, 0.01, 0.1, 1, 10, 100, 1000]
+                },
+                "K-Nearest Neighbors":{
+                    'n_neighbors':[5,7,9,11],
+                    'weights':['uniform','distance'],
+                    'algorithm':['auto','ball_tree','kd_tree','brute']
+                },
+                "Linear Regression":{
+                    'copy_X':[True, False],
+                    'fit_intercept':[True, False],
+                    'n_jobs':[1,2,4],
+                    'positive':[True, False]
+                }
+            }
+
+            model_report = evaluate_model(X_train, y_train, X_test, y_test, models,params = params)
             print("Model Report:", model_report)
 
             best_model_score = max(model_report.values())
